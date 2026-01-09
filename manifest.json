@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Tab ID Viewer",
   "version": "1.0.0",
-  "description": "現在のタブIDを表示してコピーできる拡張機能",
+  "description": "Display and copy the current tab ID",
   "permissions": ["activeTab", "clipboardWrite"],
   "action": {
     "default_popup": "popup.html"

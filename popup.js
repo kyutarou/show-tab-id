@@ -5,33 +5,33 @@ document.addEventListener('DOMContentLoaded', async () => {
   const errorEl = document.getElementById('error');
 
   try {
-    // 現在のアクティブタブを取得
+    // Get the current active tab
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
     if (tab) {
       tabIdEl.textContent = tab.id;
-      tabTitleEl.textContent = tab.title || '(タイトルなし)';
+      tabTitleEl.textContent = tab.title || '(No title)';
 
-      // コピーボタンのクリックイベント
+      // Copy button click handler
       copyBtn.addEventListener('click', async () => {
         try {
           await navigator.clipboard.writeText(String(tab.id));
-          copyBtn.textContent = 'コピーしました!';
+          copyBtn.textContent = 'Copied!';
           copyBtn.classList.add('copied');
 
           setTimeout(() => {
-            copyBtn.textContent = 'IDをコピー';
+            copyBtn.textContent = 'Copy ID';
             copyBtn.classList.remove('copied');
           }, 1500);
         } catch (err) {
-          errorEl.textContent = 'コピーに失敗しました';
+          errorEl.textContent = 'Failed to copy';
         }
       });
     } else {
       tabIdEl.textContent = '-';
-      errorEl.textContent = 'タブ情報を取得できませんでした';
+      errorEl.textContent = 'Could not get tab info';
     }
   } catch (err) {
-    errorEl.textContent = `エラー: ${err.message}`;
+    errorEl.textContent = `Error: ${err.message}`;
   }
 });
