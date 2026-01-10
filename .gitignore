@@ -3,3 +3,6 @@
 
 # Icons source (SVG only)
 icons/*.svg
+
+# Web Store assets
+screenshot_*.png
