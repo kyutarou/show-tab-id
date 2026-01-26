@@ -3,77 +3,170 @@
 <head>
   <meta charset="UTF-8">
   <style>
+    :root {
+      --bg: #fafafa;
+      --card-bg: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --border-hover: #d1d5db;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --icon: #9ca3af;
+      --icon-hover: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       width: 280px;
-      padding: 16px;
+      padding: 20px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       margin: 0;
+      background: var(--bg);
     }
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    header svg {
+      width: 18px;
+      height: 18px;
+      color: var(--text-secondary);
+    }
+
     h1 {
       font-size: 14px;
-      margin: 0 0 12px 0;
-      color: #333;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-primary);
     }
-    .tab-info {
-      background: #f5f5f5;
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
     }
-    .label {
-      font-size: 11px;
-      color: #666;
-      margin-bottom: 4px;
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     }
-    .value {
-      font-size: 18px;
-      font-weight: bold;
-      color: #1a73e8;
+
+    .card:active {
+      background: #f9fafb;
+      transform: scale(0.99);
+    }
+
+    .card.copied {
+      border-color: var(--success);
+      background: var(--success-bg);
+    }
+
+    .card.copied .copy-icon {
+      color: var(--success);
+    }
+
+    .card-secondary {
+      padding: 10px 14px;
+    }
+
+    .card-secondary .card-text {
+      font-size: 13px;
+      color: var(--text-secondary);
       font-family: 'Consolas', 'Monaco', monospace;
     }
-    .title {
-      font-size: 12px;
-      color: #333;
-      word-break: break-all;
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid #ddd;
+
+    .card-primary {
+      padding: 18px 16px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: #1a73e8;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background 0.2s;
+
+    .card-primary .card-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: 'Consolas', 'Monaco', monospace;
+      letter-spacing: 1px;
     }
-    button:hover {
-      background: #1557b0;
+
+    .copy-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--icon);
+      flex-shrink: 0;
+      transition: color 0.15s ease;
     }
-    button:active {
-      background: #104a9e;
+
+    .card:hover .copy-icon {
+      color: var(--icon-hover);
     }
-    .copied {
-      background: #34a853 !important;
+
+    .check-icon {
+      display: none;
     }
+
+    .card.copied .copy-icon.clipboard {
+      display: none;
+    }
+
+    .card.copied .copy-icon.check {
+      display: block;
+      color: var(--success);
+    }
+
     .error {
       color: #d93025;
       font-size: 12px;
-      margin-top: 8px;
+      margin-top: 4px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>Tab ID Viewer</h1>
-  <div class="tab-info">
-    <div class="label">Tab ID</div>
-    <div class="value" id="tabId">-</div>
-    <div class="title" id="tabTitle"></div>
+  <header>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    <h1>Tab ID Viewer</h1>
+  </header>
+
+  <div class="card card-secondary" id="tabIdFull">
+    <span class="card-text">tabid is <span id="tabIdValue">-</span></span>
+    <svg class="copy-icon clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    <svg class="copy-icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
   </div>
-  <button id="copyBtn">Copy ID</button>
+
+  <div class="card card-primary" id="tabIdOnly">
+    <span class="card-text" id="tabIdOnlyValue">-</span>
+    <svg class="copy-icon clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+    <svg class="copy-icon check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+  </div>
+
   <div class="error" id="error"></div>
   <script src="popup.js"></script>
 </body>
