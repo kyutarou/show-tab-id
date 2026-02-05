@@ -12,6 +12,12 @@ A Chrome extension to display and copy the current tab ID.
 
 ## Installation
 
+### From Chrome Web Store
+
+Install from: https://chromewebstore.google.com/detail/tab-id-viewer/baomhnfaajpepjocbeecnhhlhcnippdg
+
+### From Source
+
 1. Open `chrome://extensions/` in Chrome
 2. Enable "Developer mode" (top right)
 3. Click "Load unpacked"
